@@ -719,111 +719,30 @@ void AES_EncryptInit(AES_CTX *ctx, const unsigned char *key, const unsigned char
 	ctx->iv[1] = GETU32(iv + 4);
 	ctx->iv[2] = GETU32(iv + 8);
 	ctx->iv[3] = GETU32(iv + 12);
-	
-	ctx->roundkey[8] = ctx->roundkey[0] ^ 
-		(Te4[(ctx->roundkey[7] >> 16) & 0xff] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[7] >>  8) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[7] >>  0) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[7] >> 24) & 0xff] & 0x000000ff) ^ rcon[0];
-	ctx->roundkey[9] = ctx->roundkey[1] ^ ctx->roundkey[8];
-	ctx->roundkey[10] = ctx->roundkey[2] ^ ctx->roundkey[9];
-	ctx->roundkey[11] = ctx->roundkey[3] ^ ctx->roundkey[10];
-	ctx->roundkey[12] = ctx->roundkey[4] ^ 
-		(Te4[(ctx->roundkey[11] >> 24)] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[11] >> 16) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[11] >>  8) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[11] >>  0) & 0xff] & 0x000000ff);
-	ctx->roundkey[13] = ctx->roundkey[5] ^ ctx->roundkey[12];
-	ctx->roundkey[14] = ctx->roundkey[6] ^ ctx->roundkey[13];
-	ctx->roundkey[15] = ctx->roundkey[7] ^ ctx->roundkey[14];
-	ctx->roundkey[16] = ctx->roundkey[8] ^ 
-		(Te4[(ctx->roundkey[15] >> 16) & 0xff] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[15] >>  8) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[15] >>  0) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[15] >> 24) & 0xff] & 0x000000ff) ^ rcon[1];
-	ctx->roundkey[17] = ctx->roundkey[9] ^ ctx->roundkey[16];
-	ctx->roundkey[18] = ctx->roundkey[10] ^ ctx->roundkey[17];
-	ctx->roundkey[19] = ctx->roundkey[11] ^ ctx->roundkey[18];
-	ctx->roundkey[20] = ctx->roundkey[12] ^ 
-		(Te4[(ctx->roundkey[19] >> 24)] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[19] >> 16) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[19] >>  8) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[19] >>  0) & 0xff] & 0x000000ff);
-	ctx->roundkey[21] = ctx->roundkey[13] ^ ctx->roundkey[20];
-	ctx->roundkey[22] = ctx->roundkey[14] ^ ctx->roundkey[21];
-	ctx->roundkey[23] = ctx->roundkey[15] ^ ctx->roundkey[22];
-	ctx->roundkey[24] = ctx->roundkey[16] ^ 
-		(Te4[(ctx->roundkey[23] >> 16) & 0xff] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[23] >>  8) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[23] >>  0) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[23] >> 24) & 0xff] & 0x000000ff) ^ rcon[2];
-	ctx->roundkey[25] = ctx->roundkey[17] ^ ctx->roundkey[24];
-	ctx->roundkey[26] = ctx->roundkey[18] ^ ctx->roundkey[25];
-	ctx->roundkey[27] = ctx->roundkey[19] ^ ctx->roundkey[26];
-	ctx->roundkey[28] = ctx->roundkey[20] ^ 
-		(Te4[(ctx->roundkey[27] >> 24)] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[27] >> 16) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[27] >>  8) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[27] >>  0) & 0xff] & 0x000000ff);
-	ctx->roundkey[29] = ctx->roundkey[21] ^ ctx->roundkey[28];
-	ctx->roundkey[30] = ctx->roundkey[22] ^ ctx->roundkey[29];
-	ctx->roundkey[31] = ctx->roundkey[23] ^ ctx->roundkey[30];
-	ctx->roundkey[32] = ctx->roundkey[24] ^ 
-		(Te4[(ctx->roundkey[31] >> 16) & 0xff] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[31] >>  8) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[31] >>  0) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[31] >> 24) & 0xff] & 0x000000ff) ^ rcon[3];
-	ctx->roundkey[33] = ctx->roundkey[25] ^ ctx->roundkey[32];
-	ctx->roundkey[34] = ctx->roundkey[26] ^ ctx->roundkey[33];
-	ctx->roundkey[35] = ctx->roundkey[27] ^ ctx->roundkey[34];
-	ctx->roundkey[36] = ctx->roundkey[28] ^ 
-		(Te4[(ctx->roundkey[35] >> 24)] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[35] >> 16) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[35] >>  8) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[35] >>  0) & 0xff] & 0x000000ff);
-	ctx->roundkey[37] = ctx->roundkey[29] ^ ctx->roundkey[36];
-	ctx->roundkey[38] = ctx->roundkey[30] ^ ctx->roundkey[37];
-	ctx->roundkey[39] = ctx->roundkey[31] ^ ctx->roundkey[38];
-	ctx->roundkey[40] = ctx->roundkey[32] ^ 
-		(Te4[(ctx->roundkey[39] >> 16) & 0xff] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[39] >>  8) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[39] >>  0) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[39] >> 24) & 0xff] & 0x000000ff) ^ rcon[4];
-	ctx->roundkey[41] = ctx->roundkey[33] ^ ctx->roundkey[40];
-	ctx->roundkey[42] = ctx->roundkey[34] ^ ctx->roundkey[41];
-	ctx->roundkey[43] = ctx->roundkey[35] ^ ctx->roundkey[42];
-	ctx->roundkey[44] = ctx->roundkey[36] ^ 
-		(Te4[(ctx->roundkey[43] >> 24)] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[43] >> 16) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[43] >>  8) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[43] >>  0) & 0xff] & 0x000000ff);
-	ctx->roundkey[45] = ctx->roundkey[37] ^ ctx->roundkey[44];
-	ctx->roundkey[46] = ctx->roundkey[38] ^ ctx->roundkey[45];
-	ctx->roundkey[47] = ctx->roundkey[39] ^ ctx->roundkey[46];
-	ctx->roundkey[48] = ctx->roundkey[40] ^ 
-		(Te4[(ctx->roundkey[47] >> 16) & 0xff] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[47] >>  8) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[47] >>  0) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[47] >> 24) & 0xff] & 0x000000ff) ^ rcon[5];
-	ctx->roundkey[49] = ctx->roundkey[41] ^ ctx->roundkey[48];
-	ctx->roundkey[50] = ctx->roundkey[42] ^ ctx->roundkey[49];
-	ctx->roundkey[51] = ctx->roundkey[43] ^ ctx->roundkey[50];
-	ctx->roundkey[52] = ctx->roundkey[44] ^ 
-		(Te4[(ctx->roundkey[51] >> 24)] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[51] >> 16) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[51] >>  8) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[51] >>  0) & 0xff] & 0x000000ff);
-	ctx->roundkey[53] = ctx->roundkey[45] ^ ctx->roundkey[52];
-	ctx->roundkey[54] = ctx->roundkey[46] ^ ctx->roundkey[53];
-	ctx->roundkey[55] = ctx->roundkey[47] ^ ctx->roundkey[54];
-	ctx->roundkey[56] = ctx->roundkey[48] ^ 
-		(Te4[(ctx->roundkey[55] >> 16) & 0xff] & 0xff000000) ^ 
-		(Te4[(ctx->roundkey[55] >>  8) & 0xff] & 0x00ff0000) ^ 
-		(Te4[(ctx->roundkey[55] >>  0) & 0xff] & 0x0000ff00) ^ 
-		(Te4[(ctx->roundkey[55] >> 24) & 0xff] & 0x000000ff) ^ rcon[6];
-	ctx->roundkey[57] = ctx->roundkey[49] ^ ctx->roundkey[56];
-	ctx->roundkey[58] = ctx->roundkey[50] ^ ctx->roundkey[57];
-	ctx->roundkey[59] = ctx->roundkey[51] ^ ctx->roundkey[58];
+
+	for (unsigned char index = 8; index < 60; index += 8) {
+		ctx->roundkey[index] = ctx->roundkey[index - 8] ^ 
+			(Te4[(ctx->roundkey[index - 1] >> 16) & 0xff] & 0xff000000) ^ 
+			(Te4[(ctx->roundkey[index - 1] >>  8) & 0xff] & 0x00ff0000) ^ 
+			(Te4[(ctx->roundkey[index - 1] >>  0) & 0xff] & 0x0000ff00) ^ 
+			(Te4[(ctx->roundkey[index - 1] >> 24) & 0xff] & 0x000000ff) ^ rcon[index / 8 -1];
+		ctx->roundkey[index + 1] = ctx->roundkey[index - 7] ^ ctx->roundkey[index];
+		ctx->roundkey[index + 2] = ctx->roundkey[index - 6] ^ ctx->roundkey[index + 1];
+		ctx->roundkey[index + 3] = ctx->roundkey[index - 5] ^ ctx->roundkey[index + 2];
+		
+		if (index == 56) {
+			break;
+		}
+		
+		ctx->roundkey[index + 4] = ctx->roundkey[index - 4] ^ 
+			(Te4[(ctx->roundkey[index + 3] >> 24)] & 0xff000000) ^ 
+			(Te4[(ctx->roundkey[index + 3] >> 16) & 0xff] & 0x00ff0000) ^ 
+			(Te4[(ctx->roundkey[index + 3] >>  8) & 0xff] & 0x0000ff00) ^ 
+			(Te4[(ctx->roundkey[index + 3] >>  0) & 0xff] & 0x000000ff);
+		ctx->roundkey[index + 5] = ctx->roundkey[index - 3] ^ ctx->roundkey[index + 4];
+		ctx->roundkey[index + 6] = ctx->roundkey[index - 2] ^ ctx->roundkey[index + 5];
+		ctx->roundkey[index + 7] = ctx->roundkey[index - 1] ^ ctx->roundkey[index + 6];
+	}
 }
 
 void AES_DecryptInit(AES_CTX *ctx, const unsigned char *key, const unsigned char *iv) {
