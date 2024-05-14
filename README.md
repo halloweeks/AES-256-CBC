@@ -2,10 +2,11 @@
 This GitHub repository contains a standard implementation of the Advanced Encryption Standard (AES) with a focus on AES-256 CBC (Cipher Block Chaining) encryption. AES-256 is a highly secure encryption standard due to its 256-bit key size, providing robust protection for sensitive data. CBC mode ensures increased security by chaining each plaintext block to the previous ciphertext block before encryption, making it resistant to certain cryptographic attacks.
 
 ## Features
-- Header-only library, no external dependencies required.
-- Supports AES-256-CBC encryption and decryption.
+- **Header-only** library, no external dependencies required.
+- **Supports** AES-256-CBC encryption and decryption.
 - Seamless integration with an example of use.
-
+- **Compatibility:** Data encrypted using this standard AES-256 CBC algorithm can be decrypted using any compliant AES-256 CBC decryption implementation.
+- 
 ## Usage Example
 ```c
 #include <stdio.h>
