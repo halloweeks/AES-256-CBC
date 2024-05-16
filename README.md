@@ -141,7 +141,86 @@ int main(int argc, const char *argv[]) {
 }
 ```
 
+### Example Code (main.c)
 
+Here's an example code snippet in C demonstrating AES-256 CBC encryption and decryption with PKCS#7 padding support:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdint.h>
+#include "AES_256_CBC.h"
+
+// Encryption data with padding PKCS7
+uint32_t EncryptData(uint8_t *data, uint32_t size, const uint8_t *key, const uint8_t *iv) {
+	uint8_t padding_size = AES_BLOCK_SIZE - (size % AES_BLOCK_SIZE);
+	uint32_t data_size = size + padding_size;
+
+        // adding padding value
+	for (uint8_t index = 0; index < padding_size; index++) {
+		data[size + index] = padding_size;
+	}
+	
+	AES_CTX ctx;
+	AES_EncryptInit(&ctx, key, iv);
+	
+	for (uint32_t offset = 0; offset < data_size; offset += AES_BLOCK_SIZE) {
+		AES_Encrypt(&ctx, data + offset, data + offset);
+	}
+	
+	AES_CTX_Free(&ctx);
+	
+	return data_size;
+}
+
+// Decryption data with padding PKCS7
+uint32_t DecryptData(uint8_t *data, uint32_t size, const uint8_t *key, const uint8_t *iv) {
+	AES_CTX ctx;
+	AES_DecryptInit(&ctx, key, iv);
+	
+	for (uint32_t offset = 0; offset < size; offset += AES_BLOCK_SIZE) {
+		AES_Decrypt(&ctx, data + offset, data + offset);
+	}
+	
+	AES_CTX_Free(&ctx);
+	
+	return size - data[size - 1];
+}
+
+
+void output(const char *title, const uint8_t *data, unsigned int size) {
+    printf("%s", title);
+    for (unsigned int index = 0; index < size; index++) {
+        printf("%02X", data[index]);
+    }
+    printf("\n");
+}
+
+int main(int argc, const char *argv[]) {
+	uint8_t data[32];
+	uint8_t key[AES_KEY_SIZE];
+	uint8_t iv[AES_BLOCK_SIZE];
+	int data_len = 0;
+	
+	memcpy(data, "halloweeks", 10);
+	memset(key, 0x69, 32);
+	memset(iv, 0x78, 16);
+	data_len = 10; // original data length
+	
+	output("ori: 0x", data, data_len);
+	
+	data_len = EncryptData(data, data_len, key, iv);
+	
+	output("enc: 0x", data, data_len);
+	
+	data_len = DecryptData(data, data_len, key, iv);
+	
+	output("dec: 0x", data, data_len);
+	return 0;
+}
+```
 
 ## Contributions
 
